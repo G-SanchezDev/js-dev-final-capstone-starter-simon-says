@@ -4,9 +4,9 @@
 
  const startButton = document.querySelector(".js-start-button");
  // TODO: Add the missing query selectors:
- const statusSpan = document.querySelector("js-span"); // Use querySelector() to get the status element
- const heading = document.querySelector("js-heading"); // Use querySelector() to get the heading element
- const padContainer = document.querySelector("js-padContainer"); // Use querySelector() to get the heading element
+ const statusSpan = document.querySelector(".js-span"); // Use querySelector() to get the status element
+ const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
+ const padContainer = document.querySelector(".js-padContainer"); // Use querySelector() to get the heading element
 
 /**
  * VARIABLES
@@ -40,19 +40,19 @@ let roundCount = 0; // track the number of rounds that have been played so far
 
   {
     color: "green",
-    selector: document.querySelector("js-pad-green"),
+    selector: document.querySelector(".js-pad-green"),
     sound: new Audio("../assets/simon-says-sound-2.mp3"),
   },
   
   {
     color: "blue",
-    selector: document.querySelector("js-pad-blue"),
+    selector: document.querySelector(".js-pad-blue"),
     sound: new Audio("../assets/simon-says-sound-3.mp3"),
   },
 
   {
     color: "yellow",
-    selector: document.querySelector("js-pad-yellow"),
+    selector: document.querySelector(".js-pad-yellow"),
     sound: new Audio("../assets/simon-says-sound-4.mp3"), 
    }
   // TODO: Add the objects for the green, blue, and yellow pads. Use object for the red pad above as an example.
@@ -62,8 +62,8 @@ let roundCount = 0; // track the number of rounds that have been played so far
  * EVENT LISTENERS
  */
 
-padContainer.addEventListener("click", padHandler);
-startButton.addEventListener("click", startButtonHandler);
+if(padContainer) padContainer.addEventListener("click", padHandler);
+if(startButton) startButton.addEventListener("click", startButtonHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
 
 /**
@@ -88,8 +88,8 @@ function startButtonHandler() {
   // TODO: Write your code here.
   setLevel();
   roundCount = roundCount + 1;
-  startButton.classList.add("hidden");
-  statusSpan.classList.remove("hidden");
+  if(startButton) startButton.classList.add("hidden");
+  if(statusSpan) statusSpan.classList.remove("hidden");
   playComputerTurn();
   return { startButton, statusSpan };
 }
@@ -114,6 +114,9 @@ function startButtonHandler() {
 function padHandler(event) {
   const { color } = event.target.dataset;
   if (!color) return;
+  const pad = pads.find(pad => pad.color === color);
+  pad.sound.play();
+  checkPress(color);
 
   // TODO: Write your code here.
   return color;
@@ -205,11 +208,10 @@ function setText(element, text) {
 function activatePad(color) {
   // TODO: Write your code here.
   const pad = pads.find((color) => color === pads.color);
-  pad.div.classList.add("activated");
-  const audio = pad.sound;
-  audio.play();
+  if(pad) pad.selector.classList.add("activated");
+  pad.sound.play();
   setTimeout(() => {
-    pad.div.classList.remove("activated");
+    pad.selector.classList.remove("activated");
   }, 500)
 }
 
@@ -232,7 +234,7 @@ function activatePads(sequence) {
   let delay = 600;
   sequence.forEach((color, index) => {
     setTimeout(()=> {
-      activatePad();
+      activatePad(color);
     }, delay);
     delay += 600 * (index + 1);
   });
@@ -263,11 +265,11 @@ function activatePads(sequence) {
  */
  function playComputerTurn() {
   // TODO: Write your code here.
-  padContainer.classList.add("unclickable");
-  statusSpan.classList.remove("hidden");
+  if(padContainer) padContainer.classList.add("unclickable");
+  if(statusSpan) statusSpan.classList.remove("hidden");
   statusSpan.textContent = "The computers turn...";
-  heading.textContent = "`Round ${roundCount} of ${maxRoundCount}`";
-  const randomColor = getRandomItem;
+  heading.textContent = `Round ${roundCount} of ${maxRoundCount}`;
+  const randomColor = getRandomItem(padsS);
   computerSequence.push(randomColor);
   activatePads(computerSequence);
   setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
@@ -282,9 +284,9 @@ function activatePads(sequence) {
  */
 function playHumanTurn() {
   // TODO: Write your code here.
-  padContainer.classList.remove("unclickable");
+  if(padContainer) padContainer.classList.remove("unclickable");
   const pressesLeft = maxRoundCount - roundCount + 1;
-  statusSpan.textContent = `# of presses left: ${pressesLeft}`;
+  if(statusSpan) statusSpan.textContent = `# of presses left: ${pressesLeft}`;
 }
 
 /**
