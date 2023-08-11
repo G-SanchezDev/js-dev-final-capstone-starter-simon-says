@@ -363,7 +363,9 @@ function checkRound() {
  */
 function resetGame(text) {
   // TODO: Write your code here.
-
+  computerSequence = [];
+  playerSequence = [];
+  roundCount = 0;
   // Uncomment the code below:
    alert(text);
    setText(heading, "Simon Says");
