@@ -87,9 +87,9 @@ if(startButton) startButton.addEventListener("click", startButtonHandler);
 function startButtonHandler() {
   // TODO: Write your code here.
   setLevel();
-  roundCount = roundCount + 1;
-  if(startButton) startButton.classList.add("hidden");
-  if(statusSpan) statusSpan.classList.remove("hidden");
+  roundCount++;
+  startButton.classList.add("hidden",);
+  statusSpan.classList.remove("hidden");
   playComputerTurn();
   return { startButton, statusSpan };
 }
@@ -265,15 +265,14 @@ function activatePads(sequence) {
  */
  function playComputerTurn() {
   // TODO: Write your code here.
-  if(padContainer) padContainer.classList.add("unclickable");
-  if(statusSpan) statusSpan.classList.remove("hidden");
-  statusSpan.textContent = "The computers turn...";
-  heading.textContent = `Round ${roundCount} of ${maxRoundCount}`;
-  const randomColor = getRandomItem(padsS);
-  computerSequence.push(randomColor);
-  activatePads(computerSequence);
-  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000); // 5
+  padContainer.classList.add("unclickable")
+  setText(statusSpan, "The computer's turn...")
+  setText(heading, `Round ${roundCount} of ${maxRoundCount}`)
+  computerSequence.push(getRandomItem(pads).color)
+  activatePads(computerSequence)
+  setTimeout(playHumanTurn, roundCount * 600 + 1000); // 5
 }
+
 
 /**
  * Allows the player to play their turn.
