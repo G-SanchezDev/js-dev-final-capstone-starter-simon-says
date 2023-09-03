@@ -4,9 +4,9 @@
 
  const startButton = document.querySelector(".js-start-button");
  // TODO: Add the missing query selectors:
- const statusSpan = document.querySelector(".js-span"); // Use querySelector() to get the status element
+ const statusSpan = document.querySelector(".js-status"); // Use querySelector() to get the status element
  const heading = document.querySelector(".js-heading"); // Use querySelector() to get the heading element
- const padContainer = document.querySelector(".js-padContainer"); // Use querySelector() to get the heading element
+ const padContainer = document.querySelector(".js-pad-container"); // Use querySelector() to get the heading element
 
 /**
  * VARIABLES
@@ -62,8 +62,8 @@ let roundCount = 0; // track the number of rounds that have been played so far
  * EVENT LISTENERS
  */
 
-if(padContainer) padContainer.addEventListener("click", padHandler);
-if(startButton) startButton.addEventListener("click", startButtonHandler);
+padContainer.addEventListener("click", padHandler);
+startButton.addEventListener("click", startButtonHandler);
 // TODO: Add an event listener `startButtonHandler()` to startButton.
 
 /**
@@ -207,9 +207,9 @@ function setText(element, text) {
 
 function activatePad(color) {
   // TODO: Write your code here.
-  const pad = pads.find((color) => color === pads.color);
-  if(pad) pad.selector.classList.add("activated");
-  pad.sound.play();
+  const pad = pads.find((pad) => pad.color === color);
+  pad.selector.classList.add("activated");
+   pad.sound.play();
   setTimeout(() => {
     pad.selector.classList.remove("activated");
   }, 500)
@@ -270,7 +270,7 @@ function activatePads(sequence) {
   setText(heading, `Round ${roundCount} of ${maxRoundCount}`)
   computerSequence.push(getRandomItem(pads).color)
   activatePads(computerSequence)
-  setTimeout(playHumanTurn, roundCount * 600 + 1000); // 5
+  setTimeout(() => playHumanTurn(roundCount), roundCount * 600 + 1000);
 }
 
 
@@ -283,9 +283,9 @@ function activatePads(sequence) {
  */
 function playHumanTurn() {
   // TODO: Write your code here.
-  if(padContainer) padContainer.classList.remove("unclickable");
-  const pressesLeft = maxRoundCount - roundCount + 1;
-  if(statusSpan) statusSpan.textContent = `# of presses left: ${pressesLeft}`;
+  padContainer.classList.remove("unclickable");
+  setText(statusSpan, `Player turn: ${maxRoundCount - roundCount + 1} presses left`)
+  console.log("2323");
 }
 
 /**
