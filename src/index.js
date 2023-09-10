@@ -325,7 +325,7 @@ function checkPress(color) {
   const index = playerSequence.length - 1;
   const remainingPresses = computerSequence.length - playerSequence.length;
   setText(statusSpan, `Presses left: ${remainingPresses}`);
-  if (computerSequence[i] !== playerSequence[i]) {
+  if (computerSequence[index] !== playerSequence[index]) {
     resetGame("So close, try again!");
   }
 
