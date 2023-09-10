@@ -293,7 +293,7 @@ function playHumanTurn() {
   padContainer.classList.remove("unclickable");
   setText(
     statusSpan,
-    `Player turn: ${maxRoundCount - roundCount + 1} presses left`
+    `Player turn: ${computerSequence.length - playerSequence.length} presses left`
   );
 }
 
