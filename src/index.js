@@ -94,8 +94,8 @@ startButton.addEventListener("click", startButtonHandler);
  */
 function startButtonHandler() {
   // TODO: Write your code here.
-  setLevel();
-  roundCount = 1;
+  maxRoundCount = setLevel();
+  roundCount++;
   startButton.classList.add("hidden");
   statusSpan.classList.remove("hidden");
   playComputerTurn();
